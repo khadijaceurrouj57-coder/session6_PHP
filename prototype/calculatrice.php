@@ -1,73 +1,52 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Calculatrice PHP</title>
-</head>
-<body>
-
-<h2>🧮 Calculatrice PHP</h2>
-
-<form method="post">
-    <label>Nombre 1 :</label>
-    <input type="text" name="nb1"><br><br>
-
-    <label>Nombre 2 :</label>
-    <input type="text" name="nb2"><br><br>
-
-    <label>Opération :</label>
-    <select name="operation">
-        <option value="">-- Choisir --</option>
-        <option value="+">Addition (+)</option>
-        <option value="-">Soustraction (-)</option>
-        <option value="*">Multiplication (*)</option>
-        <option value="/">Division (/)</option>
-    </select><br><br>
-
-    <input type="submit" name="calculer" value="Calculer">
-</form>
-
-<hr>
-
 <?php
-// 🔹 Fonction de calcul
+$resultat = "";
+$message_erreur = "";
+$operation_nom = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $n1 = $_POST['nombre1'];
+    $n2 = $_POST['nombre2'];
+    $op = $_POST['operation'];
+
+    // Validation des données
+    if (!is_numeric($n1) || !is_numeric($n2)) {
+        $message_erreur = "Erreur : Veuillez saisir des nombres valides.";
+    } elseif ($op == "/" && $n2 == 0) {
+        $message_erreur = "Erreur : Division par zéro impossible.";
+    } else {
+        // Traitement via une fonction
+        $resultat = calculer($n1, $n2, $op);
+        $noms = ['+' => 'Addition', '-' => 'Soustraction', '*' => 'Multiplication', '/' => 'Division'];
+        $operation_nom = $noms[$op];
+    }
+}
+
 function calculer($a, $b, $op) {
     switch ($op) {
         case '+': return $a + $b;
         case '-': return $a - $b;
         case '*': return $a * $b;
         case '/': return $a / $b;
-        default: return null;
-    }
-}
-
-// 🔹 Traitement du formulaire
-if (isset($_POST['calculer'])) {
-
-    $nb1 = $_POST['nb1'];
-    $nb2 = $_POST['nb2'];
-    $operation = $_POST['operation'];
-
-    // ✅ Validation
-    if (empty($nb1) || empty($nb2) || empty($operation)) {
-        echo "<p style='color:red'>/p>";
-    }
-    elseif (!is_numeric($nb1) || !is_numeric($nb2)) {
-        echo "<p style='color:red'></p>";
-    }
-    elseif ($operation == '/' && $nb2 == 0) {
-        echo "<p style='color:red'></p>";
-    }
-    else {
-        $resultat = calculer($nb1, $nb2, $operation);
-
-        echo "<p style='color:green'>
-               <strong>$operation</strong><br>
-               <strong>$resultat</strong>
-              </p>";
     }
 }
 ?>
 
-</body>
-</html>
+<form method="post">
+    <input type="number" step="any" name="nombre1" placeholder="Nombre 1" required>
+    
+    <select name="operation">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value=""></option>
+        <option value="/">/</option>
+    </select>
+    
+    <input type="number" step="any" name="nombre2" placeholder="Nombre 2" required>
+    <button type="submit">Calculer</button>
+    
+    <br><br>
+    <label>Résultat (<?php echo $operation_nom; ?>) :</label>
+    <input type="text" value="<?php echo $resultat; ?>" readonly>
+    
+    <p style="color:red;"><?php echo $message_erreur; ?></p>
+</form>

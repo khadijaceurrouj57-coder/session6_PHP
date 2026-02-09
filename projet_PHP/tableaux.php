@@ -18,8 +18,8 @@ echo "Modèle : " . $voiture["modele"] . "<br>";
 
 // Étape 4 :
 $fruits = ["Pomme", "Banane"];
-array_push($fruits, "Mangue"); // Ajoute "Mangue"
-unset($fruits[1]); // Supprime "Banane"
+array_push($fruits, "Mangue"); 
+unset($fruits[1]); 
 
 // Étape 5 : 
 echo "Nombre de fruits : " . count($fruits);

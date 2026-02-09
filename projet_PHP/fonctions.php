@@ -1,7 +1,7 @@
 <!-- Étape 1 : -->
 <?php
 function saluer() {
-    echo "Bonjour tout le monde !";
+    echo "Bonjour tout le monde ! <br>";
 }
 saluer();
 
@@ -9,13 +9,13 @@ saluer();
 function addition($a, $b) {
     return $a + $b;
 }
-echo "Somme : " . addition(5, 10);
+echo "Somme : " . addition(5, 10)."<br>";
 
 // Étape 3 :
 function bienvenue($nom = "visiteur") {
-    echo "Bienvenue " . $nom;
+    echo "Bienvenue " . $nom ."<br>";
 }
-bienvenue(); // Affiche "Bienvenue visiteur"
+bienvenue(); 
 
 // Étape 4 : 
 $compteur = 0;
@@ -23,7 +23,7 @@ $compteur = 0;
 function incrementer() {
     static $compteur = 0;
     $compteur++;
-    echo $compteur;
+    echo" $compteur  <br>";
 }
-incrementer(); // Affiche 1
-incrementer(); // Affiche 2
+incrementer(); 
+incrementer(); 
